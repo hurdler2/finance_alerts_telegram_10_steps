@@ -1,0 +1,84 @@
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-finance_alerts}
+      POSTGRES_USER: ${POSTGRES_USER:-finance_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-finance_pass}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-finance_user} -d ${POSTGRES_DB:-finance_alerts}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"   # remove in production
+
+  # ── Redis ───────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "6379:6379"   # remove in production
+
+  # ── FastAPI ─────────────────────────────────────────────────────────────────
+  api:
+    build: .
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Celery Worker ───────────────────────────────────────────────────────────
+  worker:
+    build: .
+    restart: unless-stopped
+    command: celery -A app.celery_app worker --loglevel=info --concurrency=4 -Q ingest,default,notify
+    env_file: .env
+    volumes:
+      - .:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # ── Celery Beat (Scheduler) ─────────────────────────────────────────────────
+  beat:
+    build: .
+    restart: unless-stopped
+    command: celery -A app.celery_app beat --loglevel=info --scheduler celery.beat:PersistentScheduler
+    env_file: .env
+    volumes:
+      - .:/app
+      - beat_data:/app/celerybeat-schedule
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  beat_data:

@@ -1,0 +1,46 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Docker
+*.log
+
+# Production secrets
+nginx/certs/*.pem
+nginx/certs/*.key
+
+# DB backups (keep .gitkeep)
+backups/*.sql.gz
+backups/*.sql
+
+# IDE
+.vscode/
+.idea/
+*.swp

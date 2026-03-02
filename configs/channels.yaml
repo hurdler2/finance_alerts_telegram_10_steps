@@ -1,0 +1,29 @@
+# Telegram channel/group routing configuration
+# channel_id: Telegram channel username (@name) or numeric ID (-100xxxxxxxxxx)
+# min_score:  minimum impact_score to route to this channel (overrides global threshold)
+# categories: if set, only signals matching these categories are routed here
+#             leave empty ([]) to receive all categories
+
+channels:
+  - id: main
+    name: "Finance Alerts — Main"
+    channel_id: "${TELEGRAM_CHANNEL_ID}"   # resolved from env at runtime
+    enabled: true
+    min_score: 60
+    categories: []   # all categories
+
+  # Example: a separate high-urgency channel (score >= 80 only)
+  # - id: urgent
+  #   name: "Finance Alerts — Urgent"
+  #   channel_id: "@finance_alerts_urgent"
+  #   enabled: false
+  #   min_score: 80
+  #   categories: []
+
+  # Example: crypto-only channel
+  # - id: crypto
+  #   name: "Finance Alerts — Crypto"
+  #   channel_id: "@finance_alerts_crypto"
+  #   enabled: false
+  #   min_score: 55
+  #   categories: ["crypto"]

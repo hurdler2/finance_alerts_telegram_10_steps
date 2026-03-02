@@ -1,0 +1,287 @@
+# Finance News Sources Configuration
+# Fields:
+#   id:          unique slug (used as DB identifier)
+#   name:        display name
+#   rss_url:     RSS/Atom feed URL
+#   home_url:    site homepage (for reference)
+#   category:    macro | earnings | crypto | energy | geopolitical | banking | general
+#   priority:    1 (highest) – 5 (lowest); affects score bonus
+#   enabled:     true/false (toggle without redeploy)
+#   has_rss:     true = RSS feed; false = scraping required
+#   scrape_allowed: true if robots.txt / ToS allows scraping
+#   lang:        en / tr / de etc.
+#   poll_interval_minutes: override global 5-min default (optional)
+#   notes:       free-text notes
+
+sources:
+
+  # ── MACRO / CENTRAL BANKS ──────────────────────────────────────────────────
+
+  - id: reuters_business
+    name: "Reuters Business"
+    rss_url: "https://feeds.reuters.com/reuters/businessNews"
+    home_url: "https://www.reuters.com/business/"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Top-tier wire service. Very reliable RSS."
+
+  - id: reuters_markets
+    name: "Reuters Markets"
+    rss_url: "https://feeds.reuters.com/reuters/companyNews"
+    home_url: "https://www.reuters.com/markets/"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Markets-specific feed from Reuters."
+
+  - id: ap_business
+    name: "AP News — Business"
+    rss_url: "https://rsshub.app/apnews/topics/business"
+    home_url: "https://apnews.com/business"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "AP wire — reliable, fast."
+
+  - id: fed_press_releases
+    name: "Federal Reserve Press Releases"
+    rss_url: "https://www.federalreserve.gov/feeds/press_monetary.xml"
+    home_url: "https://www.federalreserve.gov/newsevents/pressreleases.htm"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Official Fed releases — ultra high impact."
+
+  - id: ecb_press
+    name: "ECB Press Releases"
+    rss_url: "https://www.ecb.europa.eu/rss/press.html"
+    home_url: "https://www.ecb.europa.eu/press/pressconf/html/index.en.html"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Official ECB press releases RSS."
+
+  # ── GENERAL FINANCE / MARKETS ──────────────────────────────────────────────
+
+  - id: cnbc_top_news
+    name: "CNBC Top News"
+    rss_url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114"
+    home_url: "https://www.cnbc.com/"
+    category: general
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+    notes: "CNBC top stories. RSS summary only (paywalled body)."
+
+  - id: cnbc_finance
+    name: "CNBC Finance"
+    rss_url: "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664"
+    home_url: "https://www.cnbc.com/finance/"
+    category: macro
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+
+  - id: ft_markets
+    name: "Financial Times — Markets"
+    rss_url: "https://www.ft.com/markets?format=rss"
+    home_url: "https://www.ft.com/markets"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+    notes: "Paywalled — RSS titles/summaries free. Do not scrape full body."
+
+  - id: wsj_markets
+    name: "Wall Street Journal — Markets"
+    rss_url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
+    home_url: "https://www.wsj.com/news/markets"
+    category: macro
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+    notes: "Paywalled — RSS only. High authority."
+
+  - id: marketwatch_top
+    name: "MarketWatch Top Stories"
+    rss_url: "https://feeds.marketwatch.com/marketwatch/topstories/"
+    home_url: "https://www.marketwatch.com/"
+    category: general
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+
+  - id: seeking_alpha_market_news
+    name: "Seeking Alpha — Market News"
+    rss_url: "https://seekingalpha.com/market_currents.xml"
+    home_url: "https://seekingalpha.com/news/market-news"
+    category: earnings
+    priority: 3
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+    notes: "Paywalled — RSS headline only. Good for earnings signals."
+
+  # ── EARNINGS ───────────────────────────────────────────────────────────────
+
+  - id: businesswire_earnings
+    name: "Business Wire — Earnings"
+    rss_url: "https://www.businesswire.com/rss/home/?rss=G7"
+    home_url: "https://www.businesswire.com/"
+    category: earnings
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Official press releases — earnings beats/misses, guidance."
+
+  - id: prnewswire_financial
+    name: "PR Newswire — Financial"
+    rss_url: "https://www.prnewswire.com/rss/news-releases-list.rss?category=FN"
+    home_url: "https://www.prnewswire.com/"
+    category: earnings
+    priority: 3
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Company press releases — earnings, M&A, guidance."
+
+  # ── CRYPTO ─────────────────────────────────────────────────────────────────
+
+  - id: coindesk_news
+    name: "CoinDesk News"
+    rss_url: "https://www.coindesk.com/arc/outboundfeeds/rss/"
+    home_url: "https://www.coindesk.com/"
+    category: crypto
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Leading crypto news outlet."
+
+  - id: cointelegraph
+    name: "CoinTelegraph"
+    rss_url: "https://cointelegraph.com/rss"
+    home_url: "https://cointelegraph.com/"
+    category: crypto
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+
+  - id: decrypt_news
+    name: "Decrypt"
+    rss_url: "https://decrypt.co/feed"
+    home_url: "https://decrypt.co/"
+    category: crypto
+    priority: 3
+    enabled: false
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Enabled in v2 — lower priority for MVP."
+
+  # ── ENERGY ─────────────────────────────────────────────────────────────────
+
+  - id: oilprice_news
+    name: "OilPrice.com"
+    rss_url: "https://oilprice.com/rss/main"
+    home_url: "https://oilprice.com/"
+    category: energy
+    priority: 3
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Oil/gas/energy market news."
+
+  - id: eia_news
+    name: "U.S. Energy Information Administration"
+    rss_url: "https://www.eia.gov/rss/press_releases.xml"
+    home_url: "https://www.eia.gov/pressroom/"
+    category: energy
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Official U.S. government energy data releases."
+
+  # ── GEOPOLITICAL / SANCTIONS ───────────────────────────────────────────────
+
+  - id: bbc_business
+    name: "BBC Business"
+    rss_url: "https://feeds.bbci.co.uk/news/business/rss.xml"
+    home_url: "https://www.bbc.com/news/business"
+    category: geopolitical
+    priority: 2
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+    notes: "Good for geopolitical + macro macro mix."
+
+  - id: guardian_business
+    name: "The Guardian — Business"
+    rss_url: "https://www.theguardian.com/business/rss"
+    home_url: "https://www.theguardian.com/business"
+    category: geopolitical
+    priority: 3
+    enabled: true
+    has_rss: true
+    scrape_allowed: true
+    lang: en
+
+  # ── BANKING / FINANCIAL STABILITY ─────────────────────────────────────────
+
+  - id: ft_banking
+    name: "Financial Times — Banking"
+    rss_url: "https://www.ft.com/banking?format=rss"
+    home_url: "https://www.ft.com/banking"
+    category: banking
+    priority: 1
+    enabled: true
+    has_rss: true
+    scrape_allowed: false
+    lang: en
+    notes: "Paywalled — headlines only. High value for banking signals."
+
+# ── GLOBAL DEFAULTS ──────────────────────────────────────────────────────────
+defaults:
+  poll_interval_minutes: 5
+  request_timeout_seconds: 15
+  max_retries: 3
+  retry_backoff_seconds: 30
+  user_agent: "FinanceAlertsBot/1.0 (+https://yoursite.com/bot)"
+  max_articles_per_fetch: 50
